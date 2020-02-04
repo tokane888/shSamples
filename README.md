@@ -1,0 +1,2 @@
+# shSamples
+shell scriptのサンプル集
