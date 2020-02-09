@@ -11,12 +11,25 @@ else
 fi
 
 sub() {
+  echo $(date +%T)
+  echo "sub started"
 	sleep 3
-	echo test > log.txt
+  echo "sleep ended"
+  #exit 1
+  echo $(date +%T)
+  echo "sub ended"
 }
 
-echo "nohup直前"
+echo "Working in the background. Log will be outputted to test.log."
 export -f sub
-nohup bash -c sub > /dev/null 2>&1
+set +e
+nohup bash -c sub > test.log 2>&1
+result=$?
+set -e
+if [ $result != 0 ]; then
+  echo "Failed inside nohup. Please see test.log for detail."
+  exit 1
+fi
+
 echo "完了"
 
